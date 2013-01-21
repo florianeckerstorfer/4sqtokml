@@ -1,6 +1,69 @@
 {
-    "hash": "c66cb5828da0d241abf9157ff8281e92",
+    "hash": "8f02c6f3e41eb41e24a17ca13553237f",
     "packages": [
+        {
+            "name": "florianeckerstorfer/foursquare",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/florianeckerstorfer/foursquare-php",
+                "reference": "e69b643a8202d2477f905024d6c25550fd8f6d93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/florianeckerstorfer/foursquare-php/zipball/e69b643a8202d2477f905024d6c25550fd8f6d93",
+                "reference": "e69b643a8202d2477f905024d6c25550fd8f6d93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "ext-curl": "*"
+            },
+            "suggest": {
+                "symfony/http-foundation": "2.2.*",
+                "kriswallsmith/buzz": "0.7.*"
+            },
+            "time": "2013-01-21 12:02:54",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TheTwelve\\Foursquare\\": "lib"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Woodford",
+                    "email": "chris.woodford@gmail.com",
+                    "homepage": "http://ideaphp.com"
+                }
+            ],
+            "description": "Foursquare API Client",
+            "homepage": "http://thetwelvelabs.com",
+            "keywords": [
+                "foursquare"
+            ],
+            "support": {
+                "source": "https://github.com/florianeckerstorfer/foursquare-php/tree/master"
+            }
+        },
+        {
+            "name": "php-kml/php-kml",
+            "version": "dev",
+            "source": {
+                "type": "svn",
+                "url": "http://php-kml.googlecode.com/svn/",
+                "reference": "trunk/"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            }
+        },
         {
             "name": "symfony/console",
             "version": "dev-master",
@@ -49,32 +112,78 @@
             "homepage": "http://symfony.com"
         },
         {
-            "name": "thetwelvelabs/foursquare",
-            "version": "0.1.x-dev",
+            "name": "symfony/http-foundation",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
-                "url": "https://github.com/chriswoodford/foursquare-php",
-                "reference": "7fa26d35dddd821141b1f8b621660d058ba0a195"
+                "url": "https://github.com/symfony/HttpFoundation",
+                "reference": "237e596d9dbeccd1f19e3b5ee06418c0e6000b21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/chriswoodford/foursquare-php/archive/7fa26d35dddd821141b1f8b621660d058ba0a195.zip",
-                "reference": "7fa26d35dddd821141b1f8b621660d058ba0a195",
+                "url": "https://github.com/symfony/HttpFoundation/archive/237e596d9dbeccd1f19e3b5ee06418c0e6000b21.zip",
+                "reference": "237e596d9dbeccd1f19e3b5ee06418c0e6000b21",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "ext-curl": "*"
+                "php": ">=5.3.3"
             },
-            "suggest": {
-                "symfony/http-foundation": "2.2.*",
-                "kriswallsmith/buzz": "0.7.*"
+            "time": "2013-01-17 15:25:59",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
             },
-            "time": "2013-01-14 20:09:20",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "classmap": [
+                    "Symfony/Component/HttpFoundation/Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "2.0.x-dev",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml",
+                "reference": "c508a879829976e30f05e16b96a7ed024ee82ce1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Yaml/archive/c508a879829976e30f05e16b96a7ed024ee82ce1.zip",
+                "reference": "c508a879829976e30f05e16b96a7ed024ee82ce1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "time": "2013-01-18 09:52:07",
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "TheTwelve\\Foursquare\\": "lib"
+                    "Symfony\\Component\\Yaml": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -83,16 +192,16 @@
             ],
             "authors": [
                 {
-                    "name": "Chris Woodford",
-                    "email": "chris.woodford@gmail.com",
-                    "homepage": "http://ideaphp.com"
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
                 }
             ],
-            "description": "Foursquare API Client",
-            "homepage": "http://thetwelvelabs.com",
-            "keywords": [
-                "foursquare"
-            ]
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com"
         }
     ],
     "packages-dev": null,
@@ -101,7 +210,10 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "thetwelvelabs/foursquare": 20,
-        "symfony/console": 20
+        "florianeckerstorfer/foursquare": 20,
+        "symfony/console": 20,
+        "symfony/yaml": 20,
+        "symfony/http-foundation": 20,
+        "php-kml/php-kml": 20
     }
 }

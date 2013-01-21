@@ -1,6 +1,35 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/florianeckerstorfer/foursquare-php"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "php-kml/php-kml",
+                "version": "dev",
+                "source": {
+                    "url": "http://php-kml.googlecode.com/svn/",
+                    "type": "svn",
+                    "reference": "trunk/"
+                },
+                "autoload": {
+                    "classmap": ["lib/"]
+                }
+            }
+        }
+    ],
     "require": {
-        "thetwelvelabs/foursquare": "0.1.*@dev",
-        "symfony/console":          "2.2.*@dev"
+        "florianeckerstorfer/foursquare": "dev-master",
+        "symfony/console":          "2.2.*@dev",
+        "symfony/yaml":             "2.0.*@dev",
+        "symfony/http-foundation":  "2.2.*@dev",
+        "php-kml/php-kml":           "dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "FoursquareToKml": "app/"
+        }
     }
 }
