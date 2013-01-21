@@ -40,15 +40,46 @@ class ExportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $checkinLimit = $input->getArgument('checkin-limit');
+
         $gateway = $this->getUserGateway($output);
+        try {
+            $user = $gateway->getUser();
+        } catch (\RuntimeException $e) {
+            // Ok. Reset oAuth token and try again.
+            $this->config['foursquare']['oauth_token'] = null;
+            $gateway = $this->getUserGateway($output);
+            try {
+                $user = $gateway->getUser();
+            } catch (\RuntimeException $e) {
+                $output->writeln('<error>There was an error and I could not authenticate you correctly. I\'m sorry.</error>');
+            }
+        }
+
+        if ($checkinLimit !== 0 && $checkinLimit < $user->checkins->count) {
+            $realCheckinLimit = $checkinLimit;
+        } else {
+            $realCheckinLimit = $user->checkins->count;
+        }
+
+        $output->writeln(sprintf(
+            'You have <info>%d</info> checkins. I\'m going to fetch the last <info>%d</info>.',
+            $user->checkins->count,
+            $realCheckinLimit
+        ));
+        if ($realCheckinLimit > 1000) {
+            $output->writeln('<comment>Get a coffee, this may take a while.</comment>');
+        }
+
+        $output->writeln("");
+
         try {
             $checkins = $this->getCheckins($gateway, $input->getArgument('checkin-limit'));
         } catch (\RuntimeException $e) {
-            $gateway = $this->getUserGateway($output);
-            $checkins = $this->getCheckins($gateway, $input->getArgument('checkin-limit'));
+            $output->writeln('<error>There was an error and I could not retrieve the checkins for you. I am so sorry.</error>');
         }
 
-        $output->writeln(sprintf('Found <info>%d</info> Foursquare checkins', count($checkins)));
+        $output->writeln(sprintf('Downloaded <info>%d</info> Foursquare checkins', count($checkins)));
 
         // Generate KML
         $document = new \kml_Folder('foursquare checkin history');
