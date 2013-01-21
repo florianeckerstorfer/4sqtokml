@@ -31,8 +31,8 @@ class ExportCommand extends Command
     {
         $this->setName('export')
              ->setDescription('Export your Foursquare checkins to KML')
-             ->addArgument('output-file', InputArgument::OPTIONAL, 'File to save KML to', 'checkins.xml')
-             ->addArgument('checkin-limit', InputArgument::OPTIONAL, 'Maximum number of checkins', 0)
+             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'File to save KML to', 'checkins.xml')
+             ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Maximum number of checkins', 0)
         ;
 
         $this->config = Yaml::parse('./config/foursquare.yml');
@@ -40,7 +40,7 @@ class ExportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $checkinLimit = $input->getArgument('checkin-limit');
+        $checkinLimit = $input->getOption('limit');
 
         $gateway = $this->getUserGateway($output);
         try {
@@ -74,7 +74,7 @@ class ExportCommand extends Command
         $output->writeln("");
 
         try {
-            $checkins = $this->getCheckins($output, $gateway, $realCheckinLimit, $input->getArgument('checkin-limit'));
+            $checkins = $this->getCheckins($output, $gateway, $realCheckinLimit, $checkinLimit);
         } catch (\RuntimeException $e) {
             $output->writeln('<error>There was an error and I could not retrieve the checkins for you. I am so sorry.</error>');
         }
@@ -99,9 +99,9 @@ class ExportCommand extends Command
         $document->dump(false);
         $kml = ob_get_contents();
         ob_end_clean();
-        file_put_contents($input->getArgument('output-file'), $kml);
+        file_put_contents($input->getOption('output'), $kml);
 
-        $output->writeln(sprintf('Saved checkins to <info>%s</info>.', $input->getArgument('output-file')));
+        $output->writeln(sprintf('Saved checkins to <info>%s</info>.', $input->getOption('output')));
     }
 
     protected function getCheckins(OutputInterface $output, $gateway, $totalCheckins, $limit = null)
