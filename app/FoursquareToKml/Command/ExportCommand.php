@@ -74,7 +74,7 @@ class ExportCommand extends Command
         $output->writeln("");
 
         try {
-            $checkins = $this->getCheckins($gateway, $input->getArgument('checkin-limit'));
+            $checkins = $this->getCheckins($output, $gateway, $realCheckinLimit, $input->getArgument('checkin-limit'));
         } catch (\RuntimeException $e) {
             $output->writeln('<error>There was an error and I could not retrieve the checkins for you. I am so sorry.</error>');
         }
@@ -104,11 +104,15 @@ class ExportCommand extends Command
         $output->writeln(sprintf('Saved checkins to <info>%s</info>.', $input->getArgument('output-file')));
     }
 
-    protected function getCheckins($gateway, $limit = null)
+    protected function getCheckins(OutputInterface $output, $gateway, $totalCheckins, $limit = null)
     {
+        $progress = $this->getHelperSet()->get('progress');
+
         $checkins   = array();
         $offset     = 0;
         $pageSize   = 250;
+
+        $progress->start($output, $totalCheckins);
 
         while (true) {
             if (0 === $limit || $limit > $pageSize) {
@@ -117,6 +121,7 @@ class ExportCommand extends Command
                 $pageLimit = $limit;
             }
             $checkinPage = $gateway->getCheckins(array('offset' => $offset, 'limit' => $pageLimit));
+            $progress->advance(count($checkinPage));
             if (0 === count($checkinPage)) {
                 break;
             }
@@ -128,6 +133,8 @@ class ExportCommand extends Command
                 break;
             }
         }
+
+        $progress->finish();
 
         return $checkins;
     }
