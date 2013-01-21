@@ -1,0 +1,6 @@
+{
+    "require": {
+        "thetwelvelabs/foursquare": "0.1.*@dev",
+        "symfony/console":          "2.2.*@dev"
+    }
+}
