@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="4sqtokml" default="phar">
+
+    <fileset id="phar.zip" dir=".">
+       <include name="app/**"/>
+       <include name="config/**"/>
+       <include name="vendor/**"/>
+       <include name="4sqtokml.php"/>
+       <include name="README.md"/>
+      </fileset>
+
+    <!-- ============================================  -->
+    <!-- Target: phar                                  -->
+    <!-- ============================================  -->
+    <target name="phar">
+        <echo msg="Building PHAR" />
+        <mkdir dir="./build" />
+        <pharpackage destfile="./build/4sqtokml.phar" basedir="./" stub="./phar-stub.php">
+            <fileset refid="phar.zip" />
+            <metadata>
+                <element name="version" value="1.0" />
+                <element name="authors">
+                    <element name="Florian Eckerstorfer">
+                        <element name="e-mail" value="florian@eckerstorfer.co" />
+                    </element>
+                </element>
+            </metadata>
+        </pharpackage>
+    </target>
+
+</project>
