@@ -14,6 +14,8 @@ use TheTwelve\Foursquare\HttpClient\SymfonyHttpClient;
 use TheTwelve\Foursquare\ApiGatewayFactory;
 use TheTwelve\Foursquare\AuthenticationGateway;
 
+use FoursquareToKml\Util;
+
 require __DIR__.'/../../../vendor/php-kml/php-kml/lib/kml.php';
 
 class ExportCommand extends Command
@@ -38,7 +40,7 @@ class ExportCommand extends Command
              ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Maximum number of checkins', 0)
         ;
 
-        $this->configFilename = realpath(__DIR__.'/../../../') . '/.4sqtokml.yml';
+        $this->configFilename = Util::getHomeDirectory() . '/.4sqtokml.yml';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

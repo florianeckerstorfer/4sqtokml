@@ -10,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Yaml\Yaml;
 
+use FoursquareToKml\Util;
+
 class ConfigCommand extends Command
 {
     /** @var string */
@@ -17,7 +19,7 @@ class ConfigCommand extends Command
 
     protected function configure()
     {
-        $this->configFilename = realpath(__DIR__.'/../../../') . '/.4sqtokml.yml';
+        $this->configFilename = Util::getHomeDirectory() . '/.4sqtokml.yml';
         $this->setName('config')
              ->setDescription('Configure 4sqtokml')
         ;
