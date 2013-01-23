@@ -1,0 +1,67 @@
+body {
+    background: #fff;
+    font: 1.2em 'futura-pt';
+}
+
+a:link, a:active, a:visited {
+    color: #000;
+    font-weight: 700;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.page-header,
+.page-content,
+.page-user,
+.page-footer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0.5em;
+}
+
+.page-user nav {
+    margin: 1em 0;
+    text-align: right;
+}
+
+.page-header {
+    padding: 1em 0;
+    background: #000;
+}
+
+h1 {
+    font: 800 3em 'futura-pt', sans-serif;
+    text-align: center;
+}
+
+h1 a:link, h1 a:active, h1 a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.button-box {
+    text-align: center;
+}
+
+a.connect:link, a.connect:active, a.connect:visited {
+    display: inline-block;
+    padding: 0.5em;
+    background: #000;
+    color: #fff;
+}
+
+a.download:link, a.download:active, a.download:visited {
+    display: inline-block;
+    padding: 0.5em;
+    background: #000;
+    color: #fff;
+}
+
+.page-footer {
+    margin-top: 3em;
+    border-top: 7px solid #000;
+    color: #555;
+    font-size: 0.8em;
+}

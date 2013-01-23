@@ -1,5 +1,23 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-<img src="/img/fsq-connect.png" alt="Connect to Foursquare">
+
+{% if user %}
+    <p>Hello {{ user.firstName }}, you are now authenticated and we are going to generate a KML file with all your checkins for you.{% if user.checkins.count > 100 %} Since you have a large number of checkins this will take a while. {% endif %}
+
+    <div class="button-box">
+        <a href="{{ app.url_generator.generate('generate') }}" class="download">Download</a>
+    </div>
+
+{% else %}
+    <p>Hello. 4sqtokml is a tool that takes your checkins on <a href="http://foursquare.com">Foursquare</a> and generates a KML file. KML files can be imported in apps like <a href="http://www.google.com/earth/index.html">Google Earth</a> or <a href="http://clkuk.tradedoubler.com/click?p=24380&a=2139056&url=https%3A%2F%2Fitunes.apple.com%2Fus%2Fapp%2Ffog-of-world%2Fid505367096%3Fmt%3D8%26partnerId%3D2003">Fog of World</a>.
+
+    <p>In order to be able to access your checkins, you need to allow 4sqtokml to access your Foursquare account. We don't post anything and we never store your data on our servers.
+
+    <div class="button-box">
+        <a href="{{ app.url_generator.generate('login') }}" class="connect">Connect to Foursquare</a>
+    </div>
+
+{% endif %}
+
 {% endblock content %}
