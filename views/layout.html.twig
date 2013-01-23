@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+    <title>{% block title %}Foursquare to KML{% endblock title %}</title>
+</head>
+<body>
+
+<header class="page-header">
+    <h1><a href="{{ app.url_generator.generate('index') }}">Foursquare to KML</a></h1>
+</header>
+
+<section class="page-content">
+    {% block content %}{% endblock %}
+</section>
+
+<footer class="page-footer">
+    <p>Handcrafted in Vienna by <a href="http://florianeckerstorfer.com">Florian Eckerstorfer</a>.
+</footer>
+
+</body>
+</html>
