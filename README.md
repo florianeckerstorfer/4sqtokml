@@ -8,7 +8,7 @@ Handcrafted in Vienna by [Florian Eckerstorfer](http://florianeckerstorfer.com).
 Installation
 ------------
 
-First download the latest version of **4sqtokml** from Github.
+First download the latest version of **4sqtokml**: [4sqtokml.phar](http://42.ly/CV8d)
 
 Next you need to run the `config` command and enter your **Client ID** and **Client Secret** (which can be obtained from [Foursquares developer site](https://developer.foursquare.com)).
 
