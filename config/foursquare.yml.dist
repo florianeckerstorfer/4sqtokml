@@ -1,6 +1,6 @@
 foursquare:
-    client_id: YOUR_CLIENT_ID
-    client_secret: YOUR_CLIENT_SECRET
+    client_id:
+    client_secret:
     endpoint_uri: https://api.foursquare.com
     api_version: 2
     authorize_uri: https://foursquare.com/oauth2/authorize

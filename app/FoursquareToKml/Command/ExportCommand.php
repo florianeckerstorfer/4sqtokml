@@ -21,6 +21,9 @@ class ExportCommand extends Command
     /** @var array */
     protected $config;
 
+    /** @var string */
+    protected $configFilename;
+
     /** @var AuthenticationGateway */
     protected $authGateway;
 
@@ -31,15 +34,26 @@ class ExportCommand extends Command
     {
         $this->setName('export')
              ->setDescription('Export your Foursquare checkins to KML')
-             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'File to save KML to', 'checkins.xml')
+             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'File to save KML to', 'checkins.kml')
              ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Maximum number of checkins', 0)
         ;
 
-        $this->config = Yaml::parse('./config/foursquare.yml');
+        $this->configFilename = realpath(__DIR__.'/../../../') . '/.4sqtokml.yml';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!file_exists($this->configFilename)) {
+            $output->writeln('<error>Please configure 4sqtokml first.</error>');
+            return;
+        } else {
+            $this->config = Yaml::parse($this->configFilename);
+        }
+        if (!isset($this->config['foursquare']['client_id']) || !$this->config['foursquare']['client_id'] || !isset($this->config['foursquare']['client_secret']) || !$this->config['foursquare']['client_secret']) {
+            $output->writeln('<error>Please configure 4sqtokml first.</error>');
+            return;
+        }
+
         $checkinLimit = $input->getOption('limit');
 
         $gateway = $this->getUserGateway($output);
@@ -163,8 +177,8 @@ class ExportCommand extends Command
     protected function getToken($code)
     {
         $this->config['foursquare']['oauth_token'] = $this->getAuthenticationGateway()->authenticateUser($code);
-        file_put_contents('./config/foursquare.yml', Yaml::dump($config));
-        return $config;
+        file_put_contents($this->configFilename, Yaml::dump($this->config));
+        return $this->config['foursquare']['oauth_token'];
     }
 
     protected function getUserGateway(OutputInterface $output)
