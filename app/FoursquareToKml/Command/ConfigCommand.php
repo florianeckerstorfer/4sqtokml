@@ -29,9 +29,16 @@ class ConfigCommand extends Command
     {
         $dialog = $this->getHelperSet()->get('dialog');
 
-        if (file_exists('./config/foursquare.yml.dist')) {
-            $config = Yaml::parse('./config/foursquare.yml.dist');
-        }
+        // Default configuration
+        $config = array(
+            'foursquare' => array(
+                'endpoint_uri'          => 'https://api.foursquare.com',
+                'api_version'           => 2,
+                'authorize_uri'         => 'https://foursquare.com/oauth2/authorize',
+                'access_token_uri'      => 'https://foursquare.com/oauth2/access_token',
+                'callback_uri'          => 'http://4sqtokml.braincrafted.com/'
+            )
+        );
 
         if (file_exists($this->configFilename)) {
             $config = array_merge($config, Yaml::parse($this->configFilename));
@@ -56,6 +63,16 @@ class ConfigCommand extends Command
             );
         }
         $config['foursquare']['client_secret'] = $clientSecret;
+
+        $callbackUri = null;
+        while (!$callbackUri) {
+            $callbackUri = $dialog->ask(
+                $output,
+                sprintf('Please enter the <info>Callback URI</info>%s: ', (isset($config['foursquare']['callback_uri']) ? ' [' . $config['foursquare']['callback_uri'] . ']' : '')),
+                isset($config['foursquare']['callback_uri']) ? $config['foursquare']['callback_uri'] : null
+            );
+        }
+        $config['foursquare']['callback_uri'] = $callbackUri;
 
         file_put_contents($this->configFilename, Yaml::dump($config));
         $output->writeln(sprintf('Saved configuration to <info>%s</info>.', $this->configFilename));
