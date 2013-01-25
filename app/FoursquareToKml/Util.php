@@ -1,7 +1,26 @@
 <?php
 
+/**
+ * @package    com.braincrafted.4sqtokml
+ * @subpackage FoursquareToKml
+ * @category   library
+ * @author     Florian Eckerstorfer <florian@eckerstorfer.co>
+ * @copyright  2012 Florian Eckerstorfer
+ * @license    http://opensource.org/licenses/MIT The MIT License
+ */
+
 namespace FoursquareToKml;
 
+/**
+ * Util
+ *
+ * @package    com.braincrafted.4sqtokml
+ * @subpackage FoursquareToKml
+ * @category   library
+ * @author     Florian Eckerstorfer <florian@eckerstorfer.co>
+ * @copyright  2012 Florian Eckerstorfer
+ * @license    http://opensource.org/licenses/MIT The MIT License
+ */
 class Util
 {
     /**

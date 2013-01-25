@@ -1,11 +1,30 @@
 <?php
 
+/**
+ * @package    com.braincrafted.4sqtokml
+ * @subpackage FoursquareToKml
+ * @category   library
+ * @author     Florian Eckerstorfer <florian@eckerstorfer.co>
+ * @copyright  2012 Florian Eckerstorfer
+ * @license    http://opensource.org/licenses/MIT The MIT License
+ */
+
 namespace FoursquareToKml;
 
 use TheTwelve\Foursquare\HttpClient\SymfonyHttpClient;
 use TheTwelve\Foursquare\ApiGatewayFactory;
 use TheTwelve\Foursquare\AuthenticationGateway;
 
+/**
+ * FoursquareToKml
+ *
+ * @package    com.braincrafted.4sqtokml
+ * @subpackage FoursquareToKml
+ * @category   library
+ * @author     Florian Eckerstorfer <florian@eckerstorfer.co>
+ * @copyright  2012 Florian Eckerstorfer
+ * @license    http://opensource.org/licenses/MIT The MIT License
+ */
 class FoursquareToKml
 {
     /** @var array */
@@ -24,22 +43,44 @@ class FoursquareToKml
         $this->config   = $config;
     }
 
+    /**
+     * Sets the oAuth token.
+     *
+     * @param string $token The oAuth token
+     *
+     * @return FoursquareToKml
+     */
     public function setToken($token)
     {
         $this->token = $token;
         return $this;
     }
 
+    /**
+     * Returns the oAuth token.
+     *
+     * @return string The oAuth token
+     */
     public function getToken()
     {
         return $this->token;
     }
 
+    /**
+     * Returns if the oAuth token is set.
+     *
+     * @return bool TRUE if the oAuth token is set, FALSE otherwise
+     */
     public function hasToken()
     {
         return null !== $this->token;
     }
 
+    /**
+     * Returns the Foursquare authentication gateway.
+     *
+     * @return AuthenticationGateway
+     */
     public function getAuthGateway()
     {
         $factory = $this->getGatewayFactory();
@@ -54,6 +95,11 @@ class FoursquareToKml
         return $authGateway;
     }
 
+    /**
+     * Returns the currently logged in user.
+     *
+     * @return \stdClass The user object
+     */
     public function getUser()
     {
         return $this->getUserGateway()->getUser();
@@ -117,6 +163,11 @@ class FoursquareToKml
         return $checkins;
     }
 
+    /**
+     * Returns the user gateway.
+     *
+     * @return TheTwelve\Foursquare\UsersGateway
+     */
     public function getUserGateway()
     {
         $factory = $this->getGatewayFactory();
@@ -124,6 +175,11 @@ class FoursquareToKml
         return $factory->getUsersGateway();
     }
 
+    /**
+     * Returns the gateway factory.
+     *
+     * @return ApiGatewayFactory
+     */
     protected function getGatewayFactory()
     {
         $client = new SymfonyHttpClient();
