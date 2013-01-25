@@ -170,6 +170,9 @@ class FoursquareToKml
      */
     public function getUserGateway()
     {
+        if (!$this->hasToken()) {
+            throw new NoOAuthTokenException('Can\'t initialize user gateway because no oAuth token is specified.');
+        }
         $factory = $this->getGatewayFactory();
         $factory->setToken($this->token);
         return $factory->getUsersGateway();
