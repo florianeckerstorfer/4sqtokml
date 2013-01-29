@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-define('FSQTOKML_VERSION', '1.0');
+define('FSQTOKML_VERSION', '1.0.1');
 
 use Silex\Application;
 
