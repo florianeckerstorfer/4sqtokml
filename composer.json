@@ -21,15 +21,20 @@
         }
     ],
     "require": {
-        "florianeckerstorfer/foursquare": "dev-master",
-        "symfony/console":          "2.2.*@dev",
-        "symfony/yaml":             "2.0.*@dev",
-        "symfony/http-foundation":  "2.2.*@dev",
-        "php-kml/php-kml":           "dev"
+        "php":                              ">=5.3.3",
+        "florianeckerstorfer/foursquare":   "dev-master",
+        "symfony/yaml":                     "2.0.*@dev",
+        "symfony/http-foundation":          ">=2.1,<2.3-dev",
+        "php-kml/php-kml":                  "dev",
+        "silex/silex":                      "1.0.*@dev",
+        "twig/twig":                        ">=1.8,<2.0-dev"
     },
     "autoload": {
         "psr-0": {
-            "FoursquareToKml": "app/"
-        }
+            "FoursquareToKml": "src/"
+        },
+        "files": [
+            "vendor/php-kml/php-kml/lib/kml.php"
+        ]
     }
 }

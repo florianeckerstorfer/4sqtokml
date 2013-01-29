@@ -1,0 +1,12 @@
+.git
+.gitignore
+.gitmodules
+data/
+composer.json
+composer.lock
+phpunit.xml
+phpunit.xml.dist
+README.md
+config/foursquare.yml
+Makefile
+Makefile.dist
