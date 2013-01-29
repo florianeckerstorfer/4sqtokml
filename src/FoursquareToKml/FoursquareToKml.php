@@ -11,6 +11,8 @@
 
 namespace FoursquareToKml;
 
+use \Pimple;
+
 use TheTwelve\Foursquare\HttpClient\SymfonyHttpClient;
 use TheTwelve\Foursquare\ApiGatewayFactory;
 use TheTwelve\Foursquare\AuthenticationGateway;
@@ -27,8 +29,8 @@ use TheTwelve\Foursquare\AuthenticationGateway;
  */
 class FoursquareToKml
 {
-    /** @var array */
-    protected $config;
+    /** @var Pimple */
+    protected $container;
 
     /** @var string */
     protected $token;
@@ -36,11 +38,11 @@ class FoursquareToKml
     /**
      * Constructor.
      *
-     * @param array  $config The config array
+     * @param Pimple $container The service container
      */
-    public function __construct(array $config)
+    public function __construct(Pimple $container)
     {
-        $this->config   = $config;
+        $this->container = $container;
     }
 
     /**
@@ -83,13 +85,13 @@ class FoursquareToKml
      */
     public function getAuthGateway()
     {
-        $factory = $this->getGatewayFactory();
+        $factory = $this->container['gateway_factory'];
         $authGateway = $factory->getAuthenticationGateway(
-            $this->config['foursquare']['client_id'],
-            $this->config['foursquare']['client_secret'],
-            $this->config['foursquare']['authorize_uri'],
-            $this->config['foursquare']['access_token_uri'],
-            $this->config['foursquare']['callback_uri']
+            $this->container['config']['foursquare']['client_id'],
+            $this->container['config']['foursquare']['client_secret'],
+            $this->container['config']['foursquare']['authorize_uri'],
+            $this->container['config']['foursquare']['access_token_uri'],
+            $this->container['config']['foursquare']['callback_uri']
         );
 
         return $authGateway;
@@ -142,7 +144,7 @@ class FoursquareToKml
      *
      * @return array
      */
-    protected function getCheckins()
+    public function getCheckins()
     {
         $checkins   = array();
         $offset     = 0;
@@ -173,23 +175,8 @@ class FoursquareToKml
         if (!$this->hasToken()) {
             throw new NoOAuthTokenException('Can\'t initialize user gateway because no oAuth token is specified.');
         }
-        $factory = $this->getGatewayFactory();
+        $factory = $this->container['gateway_factory'];
         $factory->setToken($this->token);
         return $factory->getUsersGateway();
-    }
-
-    /**
-     * Returns the gateway factory.
-     *
-     * @return ApiGatewayFactory
-     */
-    protected function getGatewayFactory()
-    {
-        $client = new SymfonyHttpClient();
-        $factory = new ApiGatewayFactory($client);
-        $factory->setEndpointUri($this->config['foursquare']['endpoint_uri']);
-        $factory->useVersion($this->config['foursquare']['api_version']);
-
-        return $factory;
     }
 }

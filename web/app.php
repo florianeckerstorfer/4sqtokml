@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../vendor/php-kml/php-kml/lib/kml.php';
 
 use Silex\Application;
 
@@ -10,7 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Yaml\Yaml;
 
+use TheTwelve\Foursquare\HttpClient\SymfonyHttpClient;
+use TheTwelve\Foursquare\ApiGatewayFactory;
+
 use FoursquareToKml\FoursquareToKml;
+use FoursquareToKml\Generator\KmlGenerator;
 
 
 $app = new Application();
@@ -25,8 +28,20 @@ if (preg_match('/\.dev$/', $_SERVER['HTTP_HOST'])) {
     $app['debug'] = true;
 }
 
-$config = Yaml::parse(__DIR__.'/../config/foursquare.yml');
-$fsToKml = new FoursquareToKml($config);
+$container = new \Pimple();
+$container['config']          = Yaml::parse(__DIR__.'/../config/foursquare.yml');
+$container['http_client']     = function () {
+    return new SymfonyHttpClient();
+};
+$container['gateway_factory'] = $container->share(function ($container) {
+    $factory = new ApiGatewayFactory($container['http_client']);
+    $factory->setEndpointUri($container['config']['foursquare']['endpoint_uri']);
+    $factory->useVersion($container['config']['foursquare']['api_version']);
+    return $factory;
+});
+
+
+$fsToKml = new FoursquareToKml($container);
 if (null !== $token = $app['session']->get('oauth_token')) {
     $fsToKml->setToken($token);
 }
@@ -61,8 +76,10 @@ $app->get('/generate', function (Application $app, Request $request) use ($fsToK
     }
     $fsToKml->setToken($token);
 
+    $generator = new KmlGenerator();
+
     return new Response(
-        $fsToKml->generateKml(),
+        $generator->generate($fsToKml->getCheckins()),
         200,
         array(
             'Content-type' => 'Content-Type: application/vnd.google-earth.kml+xml',
