@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+define('FSQTOKML_VERSION', '1.0');
+
 use Silex\Application;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +50,8 @@ if (null !== $token = $app['session']->get('oauth_token')) {
 
 $app->get('/', function (Application $app, Request $request) use ($fsToKml) {
     return $app['twig']->render('index.html.twig', array(
-        'user'  => $fsToKml->hasToken() ? $fsToKml->getUser() : null
+        'user'      => $fsToKml->hasToken() ? $fsToKml->getUser() : null,
+        'version'   => FSQTOKML_VERSION
     ));
 })->bind('index');
 
