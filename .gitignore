@@ -1,6 +1,4 @@
 config/foursquare.yml
 build/
 vendor/
-
-# hidden configuration files
-.*.yml
+phpunit.xml
