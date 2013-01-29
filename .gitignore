@@ -2,3 +2,4 @@ config/foursquare.yml
 build/
 vendor/
 phpunit.xml
+Makefile
