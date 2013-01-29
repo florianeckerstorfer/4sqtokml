@@ -1,0 +1,5 @@
+deploy:
+	@@echo 'Deploying site.'
+	@@rsync -av --delete-after --progress --exclude-from './data/rsync-exclude.txt' ./ han:/var/www/4sqtokml.braincrafted.com
+
+.PHONY: deploy
